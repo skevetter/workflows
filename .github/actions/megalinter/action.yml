@@ -22,6 +22,14 @@ inputs:
     description: "How to apply fixes (commit or pull_request)"
     required: false
     default: "commit"
+  gpg_private_key:
+    description: "GPG private key for signing commits"
+    required: false
+    default: ""
+  gpg_passphrase:
+    description: "GPG passphrase for signing commits"
+    required: false
+    default: ""
 
 outputs:
   has_updated_sources:
@@ -84,8 +92,8 @@ runs:
     - name: Import GPG key
       uses: crazy-max/ghaction-import-gpg@v6
       with:
-        gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-        passphrase: ${{ secrets.GPG_PASSPHRASE }}
+        gpg_private_key: ${{ inputs.gpg_private_key }}
+        passphrase: ${{ inputs.gpg_passphrase }}
         git_user_signingkey: true
         git_commit_gpgsign: true
 

@@ -44,6 +44,5 @@ jobs:
         with:
           github_token: ${{ secrets.WORKFLOWS_PAT || secrets.GITHUB_TOKEN }}
           validate_all_codebase: ${{ inputs.validate_all_codebase != '' && inputs.validate_all_codebase || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
-          apply_fixes: ${{ inputs.apply_fixes || 'all' }}
-          apply_fixes_event: ${{ inputs.apply_fixes_event || 'all' }}
-          apply_fixes_mode: ${{ inputs.apply_fixes_mode || 'commit' }}
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
