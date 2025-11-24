@@ -1,0 +1,19 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "automerge": true,
+  "extends": ["config:recommended"],
+  "minimumReleaseAge": "30 days",
+  "pre-commit": {
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "description": "Pin Python version (github-actions)",
+      "matchManagers": ["github-actions"],
+      "matchDepNames": ["python"],
+      "allowedVersions": "<3.14"
+    }
+  ],
+  "dependencyDashboard": false,
+  "gitAuthor": "Renovate Bot <renovate@whitesourcesoftware.com>"
+}
