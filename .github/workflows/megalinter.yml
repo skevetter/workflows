@@ -1,0 +1,46 @@
+name: MegaLinter
+
+on:
+  push:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      validate_all_codebase:
+        description: "Set MegaLinter VALIDATE_ALL_CODEBASE (true/false)"
+        required: false
+        type: string
+      apply_fixes:
+        description: "Apply linter fixes (all/none)"
+        required: false
+        type: string
+      apply_fixes_event:
+        description: "Event that triggers application of fixes (pull_request, push, all)"
+        required: false
+        type: string
+      apply_fixes_mode:
+        description: "How to apply fixes (commit or pull_request)"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  megalinter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Run MegaLinter
+        uses: skevetter/workflows/.github/actions/megalinter@main
+        with:
+          github_token: ${{ secrets.WORKFLOWS_PAT || secrets.GITHUB_TOKEN }}
+          validate_all_codebase: ${{ inputs.validate_all_codebase != '' && inputs.validate_all_codebase || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
+          apply_fixes: ${{ inputs.apply_fixes || 'all' }}
+          apply_fixes_event: ${{ inputs.apply_fixes_event || 'all' }}
+          apply_fixes_mode: ${{ inputs.apply_fixes_mode || 'commit' }}
