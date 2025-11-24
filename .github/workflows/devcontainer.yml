@@ -1,0 +1,33 @@
+name: Devcontainer
+
+on:
+  push:
+    paths:
+      - ".github/workflows/devcontainer.yml"
+  workflow_dispatch:
+    inputs:
+      runCmd:
+        description: "Command to run inside the devcontainer"
+        required: false
+        type: string
+        default: 'test -x "$(command -v pre-commit)"'
+  workflow_call:
+    inputs:
+      runCmd:
+        description: "Command to run inside the devcontainer"
+        required: false
+        type: string
+        default: test -x "$(command -v pre-commit)"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: skevetter/workflows/.github/actions/devcontainer-ci@main
+        with:
+          runCmd: ${{ inputs.runCmd || 'test -x "$(command -v pre-commit)"' }}

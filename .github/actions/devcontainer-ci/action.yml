@@ -1,0 +1,32 @@
+name: "Devcontainer CI (composite)"
+description: "Checkout, setup Node (optional), and run devcontainers/ci with provided command"
+
+inputs:
+  runCmd:
+    description: "Command to run inside the devcontainer"
+    required: false
+    default: ""
+  setup_node:
+    description: "Setup Node.js"
+    required: false
+    default: "true"
+  node_version:
+    description: "Node.js version"
+    required: false
+    default: "latest"
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v5
+
+    - name: Setup Node.js
+      if: inputs.setup_node == 'true'
+      uses: actions/setup-node@v6
+      with:
+        node-version: ${{ inputs.node_version }}
+
+    - name: Run Devcontainer CI
+      uses: devcontainers/ci@v0.3
+      with:
+        runCmd: ${{ inputs.runCmd }}
