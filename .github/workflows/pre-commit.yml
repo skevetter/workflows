@@ -1,0 +1,19 @@
+name: Pre-commit
+
+on:
+  push:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  check:
+    name: Run pre-commit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Pre-commit
+        uses: skevetter/workflows/.github/actions/pre-commit@main
+        with:
+          python-version: "3.x"
+          extra_args: --all-files
