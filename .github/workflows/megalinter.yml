@@ -2,9 +2,12 @@ name: MegaLinter
 
 on:
   push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
+    types: [opened, synchronize, reopened]
   workflow_dispatch:
   workflow_call:
     inputs:
