@@ -7,7 +7,7 @@ inputs:
     required: false
     default: "3.x"
   enable_cache:
-    description: "Enable caching of pre-commit environments"
+    description: "Caching of pre-commit environments"
     required: false
     default: "true"
   setup_biome:
