@@ -1,8 +1,6 @@
 name: Renovate
 
 on:
-  schedule:
-    - cron: '0 18 * * *' # Runs daily at 18:00 UTC
   workflow_dispatch:
     inputs:
       repositories:
