@@ -1,0 +1,43 @@
+name: Renovate
+
+on:
+  workflow_dispatch:
+    inputs:
+      repositories:
+        description: "Comma-separated list of repositories"
+        required: false
+        type: string
+        default: "skevetter/workflows"
+  workflow_call:
+    inputs:
+      repositories:
+        description: "Comma-separated list of repositories"
+        required: true
+        type: string
+
+jobs:
+  renovate:
+    name: Renovate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Repositories
+        id: set_repositories
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const reposInput = context.payload.inputs?.repositories;
+            const repoList = [
+                'skevetter/workflows',
+            ];
+            const repos = reposInput
+                ? reposInput.split(',').map(r => r.trim())
+                : repoList;
+            return repos.join(',');
+
+      - uses: skevetter/workflows/.github/actions/renovate@main
+        with:
+          bitwarden_token: ${{ secrets.BITWARDEN_TOKEN }}
+          renovate_token_uuid: ${{ secrets.RENOVATE_TOKEN_UUID }}
+          repositories: ${{ steps.set_repositories.outputs.repositories }}
