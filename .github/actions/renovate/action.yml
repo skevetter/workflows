@@ -1,0 +1,37 @@
+name: Renovate
+description: Run Renovate to update dependencies
+
+inputs:
+  bitwarden_token:
+    description: "Bitwarden access token to retrieve Renovate token"
+    required: true
+  renovate_token_uuid:
+    description: "Bitwarden UUID of the Renovate token secret"
+    required: true
+  repositories:
+    description: "Comma-separated list of repositories to run Renovate on"
+    required: true
+  config_file:
+    description: "Path to Renovate config file"
+    required: false
+    default: "renovate.json"
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v5
+
+    - name: Bitwarden secrets
+      uses: bitwarden/sm-action@v2
+      with:
+        access_token: ${{ inputs.bitwarden_token }}
+        secrets: |
+          ${{ inputs.renovate_token_uuid }} > RENOVATE_TOKEN
+
+    - name: Run Renovate
+      uses: renovatebot/github-action@v43.0.18
+      with:
+        token: ${{ env.RENOVATE_TOKEN }}
+      env:
+        RENOVATE_REPOSITORIES: ${{ inputs.repositories }}
+        RENOVATE_CONFIG_FILE: ${{ inputs.config_file }}
