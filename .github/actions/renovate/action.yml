@@ -15,6 +15,10 @@ inputs:
     description: "Path to Renovate config file"
     required: false
     default: "renovate.json"
+  log_level:
+    description: "Log level for Renovate"
+    required: false
+    default: "debug"
 
 runs:
   using: "composite"
@@ -35,3 +39,4 @@ runs:
       env:
         RENOVATE_REPOSITORIES: ${{ inputs.repositories }}
         RENOVATE_CONFIG_FILE: ${{ inputs.config_file }}
+        LOG_LEVEL: ${{ inputs.log_level }}

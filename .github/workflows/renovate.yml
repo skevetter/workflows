@@ -34,7 +34,7 @@ jobs:
             const repos = reposInput
                 ? reposInput.split(',').map(r => r.trim())
                 : repoList;
-            return repos.join(',');
+            core.setOutput('repositories', repos.join(','));
 
       - uses: skevetter/workflows/.github/actions/renovate@main
         with:
