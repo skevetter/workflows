@@ -38,6 +38,6 @@ jobs:
 
       - uses: skevetter/workflows/.github/actions/renovate@main
         with:
-          bitwarden_token: ${{ secrets.BITWARDEN_TOKEN }}
+          bitwarden_token: ${{ secrets.BITWARDEN_SECRETS_ACCESS_TOKEN }}
           renovate_token_uuid: ${{ secrets.RENOVATE_TOKEN_UUID }}
           repositories: ${{ steps.set_repositories.outputs.repositories }}
