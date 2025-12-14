@@ -10,23 +10,6 @@ on:
     types: [opened, synchronize, reopened]
   workflow_dispatch:
   workflow_call:
-    inputs:
-      validate_all_codebase:
-        description: "Set MegaLinter VALIDATE_ALL_CODEBASE (true/false)"
-        required: false
-        type: string
-      apply_fixes:
-        description: "Apply linter fixes (all/none)"
-        required: false
-        type: string
-      apply_fixes_event:
-        description: "Event that triggers application of fixes (pull_request, push, all)"
-        required: false
-        type: string
-      apply_fixes_mode:
-        description: "How to apply fixes (commit or pull_request)"
-        required: false
-        type: string
 
 permissions:
   contents: write
@@ -39,10 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Run MegaLinter
+      - name: megalinter
         uses: skevetter/workflows/.github/actions/megalinter@main
         with:
           github_token: ${{ secrets.WORKFLOWS_PAT || secrets.GITHUB_TOKEN }}
-          validate_all_codebase: ${{ inputs.validate_all_codebase != '' && inputs.validate_all_codebase || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
-          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-          gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
