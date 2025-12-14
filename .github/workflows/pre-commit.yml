@@ -12,7 +12,4 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Pre-commit
-        uses: skevetter/workflows/.github/actions/pre-commit@main
-        with:
-          python_version: "3.x"
+      - uses: skevetter/workflows/.github/actions/pre-commit@main
