@@ -23,7 +23,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
 
     - name: Bitwarden secrets
       uses: bitwarden/sm-action@v2
