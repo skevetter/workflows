@@ -31,7 +31,7 @@ runs:
 
     - name: cache pre-commit
       if: ${{ inputs.enable_cache == 'true' }}
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       # NOTE: include runner.name so caches are unique per runner and get invalidated when runner changes.
       # Previously, runners would fail with file not found errors when trying to restore cache key
       # on a different runner.
