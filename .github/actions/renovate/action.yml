@@ -26,7 +26,7 @@ runs:
     - uses: actions/checkout@v6
 
     - name: Bitwarden secrets
-      uses: bitwarden/sm-action@v2
+      uses: bitwarden/sm-action@v3.0.0
       with:
         access_token: ${{ inputs.bitwarden_token }}
         secrets: |
